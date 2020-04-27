@@ -1,0 +1,37 @@
+name: Format Python
+
+on:
+  # [push]
+  schedule:
+    - cron: "0 0 * * 0" # Every week
+  #   - cron: "0 */12 * * *" # Every 12 hours
+  #   - cron: "0 */6 * * *" # Every 6 hours
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Hello world action step
+        run: |
+          echo Hello world!
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install black
+        run: |
+          pip3 install black
+      - name: Format python3
+        run: |
+          black -l 80 *.py
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Formatted with Black"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

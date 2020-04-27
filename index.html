@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <title>Covid-19 Grapher</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- Google chart API -->
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">COVID 19 Grapher/Predictor</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"
+                >Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Countries
+              </a>
+              <!-- Do not edit the dropdown comments they are used to populate the dropdown -->
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <!-- DROPDOWN_DATA_START_HERE -->
+<a class="dropdown-item" href="countries/us.png">US</a><a class="dropdown-item" href="countries/spain.png">Spain</a><a class="dropdown-item" href="countries/italy.png">Italy</a><a class="dropdown-item" href="countries/france.png">France</a><a class="dropdown-item" href="countries/germany.png">Germany</a><a class="dropdown-item" href="countries/united kingdom.png">United Kingdom</a><a class="dropdown-item" href="countries/turkey.png">Turkey</a><a class="dropdown-item" href="countries/iran.png">Iran</a><!-- DROPDOWN_DATA_END_HERE -->
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#by-country">Infection by Country</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#rate">Rate of change</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://codingshot.github.io/quarantime/"
+                >Quarantime</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">COVID-19 Notifier</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div style="margin-top: 40px;" class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <img src="covid.png" class="img-responsive img-fluid" />
+          <h3>Prediction</h3>
+          <h4>
+            Expected Peak:
+            <!-- EXPECTED_PEAK_START -->
+3,080,861 People infected on 2020-05-02<!-- EXPECTED_PEAK_STOP -->
+          </h4>
+          <h4>
+            Expected End:
+            <!-- EXPECTED_END_START -->
+2020-05-05<!-- EXPECTED_END_STOP -->
+          </h4>
+
+          <br />
+          <p id="today"></p>
+
+          <input id="slider" type="range" min="1" max="200" value="0" />
+          <p id="infected">Use the slider to predict infections</p>
+
+          <script type="text/javascript">
+            var slider = document.getElementById("slider");
+            var output = document.getElementById("infected");
+            output.innerHTML = slider.value;
+
+            // <!-- PREDICTION_DATA_START_HERE -->
+
+const tomorrow = 97
+const today = tomorrow - 1;
+const predictions = [33471.4043111823, 17167.74112729265, 4834.34127173866, 0, 0, 0, 0, 0, 0, 0, 0, 5987.004611061842, 12600.473218337575, 19579.461324826243, 26736.605330642742, 33905.038270466364, 40937.722099033446, 47706.77997663025, 54102.82855458493, 60034.3102607608, 65426.82558504831, 70222.46536485794, 74379.14307061261, 77869.92709124046, 80682.37301966711, 82817.85593830844, 84290.90270456317, 85128.52423630541, 85369.54779737705, 85063.94928308041, 84272.18550567096, 83064.5264798499, 81520.38770825646, 79727.66246696061, 77782.054090956, 75786.40825965088, 73850.04528236446, 72088.09238381361, 70620.8159896119, 69572.95401175701, 69073.04813412676, 69252.77609796949, 70246.28398739648, 72189.51851487765, 75219.55930672993, 79473.95118861302, 85090.03647102008, 92204.2872347709, 100951.63761650506, 111464.81609417425, 123873.67777253228, 138304.53666863468, 154879.49799732052, 173715.79045671437, 194925.09851371648, 218612.89468949172, 244877.77184496616, 273810.7754663192, 305494.735950471, 340003.600890585, 377401.76736154885, 417743.4142054784, 461071.83431720384, 507418.7669297579, 556803.7298998769, 609233.3519934922, 664700.7051712185, 723184.6368738479, 784649.1023078448, 849042.496730836, 916296.9877371037, 986327.8475430774, 1059032.7852728323, 1134291.27924357, 1211963.909251122, 1291891.6888554415, 1373895.397666087, 1457774.913627721, 1543308.5453056067, 1630252.3641710945, 1718339.5368871156, 1807279.6575936724, 1896758.080193333, 1986435.2506367394, 2075946.0392080646, 2164899.072810544, 2252876.067251928, 2339431.1595300175, 2424090.2401181282, 2506350.285250588, 2585678.689208231, 2661512.5966038955, 2733258.2346679014, 2800290.24553358, 2861951.0185227133, 2917550.0224310514, 2966363.137813827, 3007631.9892712184, 3040563.277733848, 3064328.112748289, 3078061.3447625325, 3080860.897411492, 3071787.099802522, 3049862.0188008742, 3014068.7913152035, 2963350.9565830645, 2896611.7884563915, 2812713.627686989, 2710477.2142120674, 2588681.0194396833, 2446060.5785342543, 2281307.822702071, 2093070.4114767057, 1879951.0650046058, 1640506.8963305855, 1373248.7436832031, 1076640.5027603912, 749098.4590148672, 388990.619939627, 0, 0]; 
+// <!-- PREDICTION_DATA_STOP_HERE -->
+
+            google.charts.load("current", { packages: ["line"] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var data = new google.visualization.DataTable();
+              data.addColumn("number", "Day");
+              data.addColumn("number", "Total Infections");
+              var toChart = [];
+              var count = 0;
+              predictions.forEach((x) => toChart.push([count++, x]));
+              data.addRows(toChart);
+              var options = {
+                chart: {
+                  title: "Prediction of Covid-19 Cases Worldwide",
+                  subtitle: "In number of days since January 22nd 2020",
+                },
+                width: 600,
+                height: 500,
+                axes: {
+                  x: {
+                    0: { side: "top" },
+                  },
+                },
+              };
+
+              var chart = new google.charts.Line(
+                document.getElementById("line_top_x")
+              );
+
+              chart.draw(data, google.charts.Line.convertOptions(options));
+            }
+
+            slider.oninput = function () {
+              output.innerHTML =
+                Math.round(Number(predictions[this.value])).toLocaleString() +
+                " people infected on day " +
+                this.value;
+            };
+            document.getElementById("today").innerHTML =
+              "Today is day " +
+              today +
+              ", <b>" +
+              Math.round(
+                predictions[tomorrow] - predictions[today]
+              ).toLocaleString() +
+              "</b> new cases expected tomorrow";
+          </script>
+
+          <div
+            class="col-xs-12"
+            id="line_top_x"
+            style="display: inline-block; margin: 0 auto;"
+          ></div>
+          <div class="mt-4">
+            <a name="by-country"></a>
+            <h3>Infection by Country</h3>
+          </div>
+          <img src="top.png" class="img-responsive img-fluid" />
+          <div>
+            <!-- Do not change table start and end comments, they are used to update it -->
+            <table class="table">
+              <tr>
+                <th></th>
+                <th>Country</th>
+                <th>Total Cases</th>
+              </tr>
+              <!-- TABLE_DATA_START_HERE -->
+<tr><td>1</td><td>US</td><td>965785</td></tr><tr><td>2</td><td>Spain</td><td>226629</td></tr><tr><td>3</td><td>Italy</td><td>197675</td></tr><tr><td>4</td><td>France</td><td>162220</td></tr><tr><td>5</td><td>Germany</td><td>157770</td></tr><tr><td>6</td><td>United Kingdom</td><td>154037</td></tr><tr><td>7</td><td>Turkey</td><td>110130</td></tr><tr><td>8</td><td>Iran</td><td>90481</td></tr><!-- TABLE_DATA_END_HERE -->
+            </table>
+          </div>
+          <div>
+            <a name="rate"></a>
+            <h3>Rate of Change</h3>
+          </div>
+          <img src="change/change1.png" class="img-responsive img-fluid" />
+          <img src="change.gif" class="img-responsive img-fluid" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Footer -->
+    <footer class="py-5 bg-black">
+      <div class="container">
+        <p class="m-0 text-center text-white small">
+          by MPA (Jack V)
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
+  </body>
+</html>
+<!-- Template used with permission from https://startbootstrap.com/templates/bare/ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
