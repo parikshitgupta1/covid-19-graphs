@@ -218,6 +218,7 @@ ax.set_title(
 plt.savefig("top")
 plt.close(fig)
 
+
 # Function to loop through when creating gif
 def createRateOfChangeGraph(fileName, step):
     rateOfChangeOfCasesByCountry = getChangeInInfected(timeseries, step)

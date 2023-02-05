@@ -1,5 +1,6 @@
 import datetime
 
+
 # Inserts 'what' between startString and endString in file, replacing whatever is there
 def findAndReplace(file, what, startString, endString):
     with open(file, "r") as toRead:
